@@ -131,7 +131,7 @@ public:
 class W5500Class {
 
 public:
-  void init(uint8_t socketNumbers, uint8_t ss_pin = 10);
+  void init(uint8_t socketNumbers, uint8_t csk_pin, uint8_t miso_pin, uint8_t mosi_pin, uint8_t ss_pin);
   static uint8_t softReset(void);
   uint8_t readVersion(void);
 

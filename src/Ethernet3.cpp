@@ -15,11 +15,19 @@
 uint8_t EthernetClass::_state[MAX_SOCK_NUM] = { 0, };
 uint16_t EthernetClass::_server_port[MAX_SOCK_NUM] = { 0, };
 
+void EthernetClass::setSpiPin(uint8_t pinSCK, uint8_t pinMISO, uint8_t pinMOSI, uint8_t pinCS) {
+	_pinSCK = pinSCK;
+	_pinMISO = pinMISO;
+	_pinMOSI = pinMOSI;
+	_pinCS = pinCS;
+  }
+
 void EthernetClass::setRstPin(uint8_t pinRST) {
   _pinRST = pinRST;
   pinMode(_pinRST, OUTPUT);
   digitalWrite(_pinRST, HIGH);
   }
+
 void EthernetClass::setCsPin(uint8_t pinCS) {
   _pinCS = pinCS;
   }
@@ -114,7 +122,7 @@ int EthernetClass::begin(uint8_t *mac_address)
     _dhcp = new DhcpClass();
   }
   // Initialise the basic info
-  w5500.init(_maxSockNum, _pinCS);
+  w5500.init(_maxSockNum, _pinSCK, _pinMISO, _pinMOSI, _pinCS);
   w5500.setMACAddress(mac_address);
   w5500.setIPAddress(IPAddress(0,0,0,0).raw_address());
 
@@ -164,7 +172,7 @@ void EthernetClass::begin(uint8_t *mac_address, IPAddress local_ip, IPAddress su
 
 void EthernetClass::begin(uint8_t *mac, IPAddress local_ip, IPAddress subnet, IPAddress gateway, IPAddress dns_server)
 {
-  w5500.init(_maxSockNum, _pinCS);
+  w5500.init(_maxSockNum, _pinSCK, _pinMISO, _pinMOSI, _pinCS);
   w5500.setMACAddress(mac);
   w5500.setIPAddress(local_ip.raw_address());
   w5500.setGatewayIp(gateway.raw_address());

@@ -36,14 +36,18 @@ public:
   uint8_t _maxSockNum;
   uint8_t _pinCS;
   uint8_t _pinRST;
+  uint8_t _pinMISO;
+  uint8_t _pinMOSI;
+  uint8_t _pinSCK;
 
   static uint8_t _state[MAX_SOCK_NUM];
   static uint16_t _server_port[MAX_SOCK_NUM];
 
-  EthernetClass() { _dhcp = NULL; _pinCS = 10; _maxSockNum = 8; }
+  EthernetClass() { _dhcp = NULL; _pinCS = 5; _maxSockNum = 8; }
 
+  void setSpiPin(uint8_t pinSCK = 18, uint8_t pinMISO = 19, uint8_t pinMOSI = 23, uint8_t pinCS = 5);
   void setRstPin(uint8_t pinRST = 9); // for WIZ550io or USR-ES1, must set befor Ethernet.begin
-  void setCsPin(uint8_t pinCS = 10); // must set befor Ethernet.begin
+  void setCsPin(uint8_t pinCS = 5); // must set befor Ethernet.begin
 
   // Initialize with less sockets but more RX/TX Buffer
   // maxSockNum = 1 Socket 0 -> RX/TX Buffer 16k
